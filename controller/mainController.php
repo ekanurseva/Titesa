@@ -137,4 +137,12 @@ function validasi_admin()
     }
 }
 // Fungsi validasi admin selesai
+
+function hapus_cookie() {
+    if (isset($_COOKIE['cf_besar']) || isset($_COOKIE['kategori_terpilih'])) {
+            // Hapus cookie yang sudah tidak diperlukan lagi
+            setcookie('cf_besar', '', time() - 3600);
+            setcookie('kategori_terpilih', '', time() - 3600);
+    }
+}
 ?>

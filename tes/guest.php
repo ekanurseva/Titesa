@@ -1,10 +1,11 @@
 <?php
 require_once '../controller/tesController.php';
-if (isset($_COOKIE['cf_besar']) || isset($_COOKIE['kategori_terpilih']) || isset($_COOKIE['hasil'])) {
-    setcookie('cf_besar', '', time() - 3600);
-    setcookie('kategori_terpilih', '', time() - 3600);
-    setcookie('hasil', '', time() - 3600);
-}
+hapus_cookie();
+// if (isset($_COOKIE['cf_besar']) || isset($_COOKIE['kategori_terpilih']) || isset($_COOKIE['hasil'])) {
+//     setcookie('cf_besar', '', time() - 3600);
+//     setcookie('kategori_terpilih', '', time() - 3600);
+//     setcookie('hasil', '', time() - 3600);
+// }
 
 $jumlah_pertanyaan = jumlah_data("SELECT * FROM pertanyaan");
 
@@ -17,105 +18,19 @@ $pertanyaan2 = query("SELECT * FROM pertanyaan LIMIT $jumper2 OFFSET $jumper1");
 $jawaban = query("SELECT * FROM jawaban");
 
 if (isset($_POST['submit'])) {
-    $data_kategori = query("SELECT * FROM tingkattekanan_stres");
-    $data_karakteristik = query("SELECT * FROM karakteristik");
-    $pertanyaan = query("SELECT * FROM pertanyaan");
-
-    // Ambil CF User
-    $nilai_user = array();
-    $nama_pertanyaan = array();
-
-    foreach ($pertanyaan as $pertanyaan) {
-        $parameter = $pertanyaan['kode_pertanyaan'];
-        $nama_pertanyaan[] = $parameter;
-
-        $jawaban = $_POST[$parameter];
-        $nilai = query("SELECT bobot FROM jawaban WHERE kode_jawaban = '$jawaban'")[0];
-        $nilai_user[] = $nilai['bobot'];
+    if(hitung($_POST > 0)) {
+        echo "
+            <script>
+                document.location.href='hasil.php';
+            </script>
+          ";
+    } else {
+        echo "
+            <script>
+                document.location.href='guest.php';
+            </script>
+          ";
     }
-
-    $bayes_terbesar = array();
-
-    foreach ($data_karakteristik as $krit) {
-        $nama_karakteristik[] = $krit['karakteristik'];
-        $kode_karakteristik = $krit['kode_karakteristik'];
-        ${"sigma_" . $kode_karakteristik} = 0;
-        ${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik} = 0;
-
-        $idkarakteristik = $krit['idkarakteristik'];
-
-        $data_indikator = query("SELECT * FROM indikator WHERE idkarakteristik = $idkarakteristik");
-
-        foreach ($data_indikator as $di) {
-            $idindikator = $di['idindikator'];
-
-            $data_pertanyaan = query("SELECT * FROM pertanyaan WHERE idindikator = $idindikator");
-
-            foreach ($data_pertanyaan as $dp) {
-                ${"sigma_" . $kode_karakteristik} += $dp['bobot'];
-            }
-
-            foreach ($data_pertanyaan as $dape) {
-                ${"h_" . $dape['kode_pertanyaan']} = (${"sigma_" . $kode_karakteristik} == 0) ? 0 : $dape['bobot'] / ${"sigma_" . $kode_karakteristik};
-
-                $kata2 = $dape['kode_pertanyaan'];
-                $indeks2 = array_search($kata2, $nama_pertanyaan);
-
-                $hitung2 = $nilai_user[$indeks2] * ${"h_" . $dape['kode_pertanyaan']};
-                ${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik} += $hitung2;
-            }
-
-            ${"bayes_" . $kode_karakteristik} = 0;
-            foreach ($data_pertanyaan as $dapert) {
-                $kata3 = $dapert['kode_pertanyaan'];
-                $indeks3 = array_search($kata3, $nama_pertanyaan);
-
-                $hitung3 = $nilai_user[$indeks3] * ${"h_" . $dapert['kode_pertanyaan']};
-                ${"p_h_e_" . $dapert['kode_pertanyaan']} = (${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik} == 0) ? 0 : $hitung3 / ${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik};
-
-                ${"bayes_" . $kode_karakteristik . $dapert['kode_pertanyaan']} = ${"p_h_e_" . $dapert['kode_pertanyaan']} * $dapert['bobot'];
-
-                ${"bayes_" . $kode_karakteristik} += ${"bayes_" . $kode_karakteristik . $dapert['kode_pertanyaan']};
-            }
-
-            ${"hd_" . $kode_karakteristik} = number_format(${"bayes_" . $kode_karakteristik} * 100, 2);
-
-            // echo "Hasil Perhitungan Bayes dari " . $krit['kode_karakteristik'] . " adalah " . ${"hd_" . $krit['kode_karakteristik']} . "<br><br>";
-
-            $bayes_terbesar[] = ${"hd_" . $kode_karakteristik};
-        }
-    }
-
-    $cf_besar = max($bayes_terbesar);
-
-    // echo "Hasil BAYES TERGEDE adalah " . $cf_besar;
-
-    // Total Bobot untuk kategori
-    $cf_total = 0;
-
-    for ($s = 0; $s < count($bayes_terbesar); $s++) {
-        $cf_total += $bayes_terbesar[$s];
-    }
-
-    // echo "bobot kategori adalah = " . $cf_total . "<br>";
-
-    $kategori_terpilih = '';
-
-    // Memeriksa nilai total pada setiap kategori
-    foreach ($data_kategori as $kategori) {
-        if ($cf_total >= $kategori['range_bawah'] && $cf_total <= $kategori['range_atas']) {
-            $kategori_terpilih = $kategori['tekanan'];
-            break; // Hentikan perulangan jika kategori ditemukan
-        }
-    }
-
-    // Set cookie dengan hasil perhitungan
-    setcookie('cf_besar', $cf_besar, time() + 10800); // Cookie berlaku selama 3 jam
-    setcookie('kategori_terpilih', $kategori_terpilih, time() + 10800);
-
-    // Redirect ke halaman guest.php
-    header('Location: ../hasil/guest.php');
-    exit;
 }
 ?>
 
@@ -225,7 +140,7 @@ if (isset($_POST['submit'])) {
                             <div class="row pt-lg-5">
                                 <div class="col-lg-6 col-md-8 mx-auto">
                                     <a href="" class="text-nowrap logo-img text-center d-block py-2 w-100">
-                                        <img src="assets/images/logos/Logo4.png" width="50" alt="" />
+                                        <img src="../assets/images/logos/Logo4.png" width="50" alt="" />
                                     </a>
                                     <h3 class="fw-bold">Tes Tingkat Tekanan Stres Akademik</h3>
                                     <p class="lead">Jawablah pertanyaan dibawah ini !</p>
@@ -289,11 +204,7 @@ if (isset($_POST['submit'])) {
                                         ?>
                                     </div>
                                 </div>
-                                <a href="tes2.php">
-                                    <button type="submit" class="btn btn-secondary w-100 py-8 fs-4 mb-4 rounded-2"
-                                        name=" submit">Submit</button>
-                                </a>
-
+                                    <button type="submit" class="btn btn-secondary w-100 py-8 fs-4 mb-4 rounded-2" name="submit">Submit</button>
                         </form>
                         <!-- Daftar Pertanyaan Selesai-->
 

@@ -231,22 +231,31 @@ function hitung($data)
     foreach ($data_kategori as $kategori) {
         if ($cf_total >= $kategori['range_bawah'] && $cf_total <= $kategori['range_atas']) {
             $kategori_terpilih = $kategori['tekanan'];
-            break; // Hentikan perulangan jika kategori ditemukan
         }
     }
 
+    // var_dump($cf_total);
     // var_dump($kategori_terpilih);
-    // echo "Kategorinya adalah " . $kategori_terpilih;
+    // echo "Kategorinya adalah " . $kategori_terpilih . "<br>";
 
-    $iduser = dekripsi($_COOKIE['mGpTw']);
+    if(isset($_COOKIE['mGpTw'])) {
+        $iduser = dekripsi($_COOKIE['mGpTw']);
+    
+        $query = "INSERT INTO hasil
+                        VALUES
+                        (NULL, '$iduser', '$kategori_terpilih', '$cf_besar', CURRENT_TIMESTAMP())";
+    
+        mysqli_query($conn, $query);
+    
+        return mysqli_affected_rows($conn);
+    } else {
+        setcookie('cf_besar', $cf_besar, time() + 10800);
+        setcookie('kategori_terpilih', $kategori_terpilih, time() + 10800);
+        // setcookie('kategori_terpilih', "sedang", time() + 10800);
 
-    $query = "INSERT INTO hasil
-                    VALUES
-                    (NULL, '$iduser', '$kategori_terpilih', '$cf_besar', CURRENT_TIMESTAMP())";
+        return 1;
+    }
 
-    mysqli_query($conn, $query);
-
-    return mysqli_affected_rows($conn);
 }
 
 function hitung_guest($data)

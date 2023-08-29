@@ -1,16 +1,13 @@
 <?php
-// Cek apakah hasil perhitungan ada dalam cookie
-// if (isset($_COOKIE['cf_besar']) && isset($_COOKIE['kategori_terpilih'])) {
-//     $cf_besar = $_COOKIE['cf_besar'];
-//     $kategori_terpilih = $_COOKIE['kategori_terpilih'];
+    require_once "../controller/tesController.php";
+    $nama_kategori = $_COOKIE['kategori_terpilih'];
 
-//     // Hapus cookie yang sudah tidak diperlukan lagi
-//     setcookie('cf_besar', '', time() - 3600);
-//     setcookie('kategori_terpilih', '', time() - 3600);
-// } else {
-//     echo "Hasil perhitungan tidak tersedia.";
-//     exit;
-// }
+    $kategori = query("SELECT * FROM tingkattekanan_stres WHERE tekanan = '$nama_kategori'")[0];
+
+    $idkategori = $kategori['idtekanan'];
+    $solusi = query("SELECT * FROM solusi WHERE idtekanan = $idkategori");
+
+    $cf_besar = $_COOKIE['cf_besar'];
 ?>
 
 <!DOCTYPE html>
@@ -123,18 +120,18 @@
                             <?= $cf_besar ?>%
                         </h1>
                         <h3 class="text-center">Tingkat Tekanan Stres
-                            <?= $kategori_terpilih ?>
+                            <?= $nama_kategori ?>
                         </h3>
                     </div>
 
-                    <!-- <div>
+                    <div>
                         <ul class="fw-bold mb-0 justify fs-6">Solusi Penanganan:</ul>
                         <?php foreach ($solusi as $ds): ?>
                             <li class="ms-4">
                                 <?= $ds['solusi']; ?>
                             </li>
                         <?php endforeach; ?>
-                    </div> -->
+                    </div>
 
                     <div class="text-center mt-5">
                         <a class="btn btn-primary btn-lg" href="../print.php?idhasil=" target="_blank">Cetak</a>

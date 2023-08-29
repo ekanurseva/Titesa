@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 29, 2023 at 03:45 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- Host: localhost
+-- Waktu pembuatan: 29 Agu 2023 pada 17.28
+-- Versi server: 10.4.22-MariaDB
+-- Versi PHP: 8.0.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail_gejala`
+-- Struktur dari tabel `detail_gejala`
 --
 
 CREATE TABLE `detail_gejala` (
@@ -33,12 +33,12 @@ CREATE TABLE `detail_gejala` (
   `idtekanan` int(11) NOT NULL,
   `banding_gejala` varchar(50) NOT NULL,
   `rentang-gejala` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hasil`
+-- Struktur dari tabel `hasil`
 --
 
 CREATE TABLE `hasil` (
@@ -47,10 +47,10 @@ CREATE TABLE `hasil` (
   `hsl_tekanan` varchar(50) NOT NULL,
   `bobot` double NOT NULL,
   `tgl` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `hasil`
+-- Dumping data untuk tabel `hasil`
 --
 
 INSERT INTO `hasil` (`idhasil`, `iduser`, `hsl_tekanan`, `bobot`, `tgl`) VALUES
@@ -83,7 +83,7 @@ INSERT INTO `hasil` (`idhasil`, `iduser`, `hsl_tekanan`, `bobot`, `tgl`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `indikator`
+-- Struktur dari tabel `indikator`
 --
 
 CREATE TABLE `indikator` (
@@ -91,10 +91,10 @@ CREATE TABLE `indikator` (
   `idkarakteristik` int(11) NOT NULL,
   `kode_indikator` varchar(25) NOT NULL,
   `indikator` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `indikator`
+-- Dumping data untuk tabel `indikator`
 --
 
 INSERT INTO `indikator` (`idindikator`, `idkarakteristik`, `kode_indikator`, `indikator`) VALUES
@@ -108,7 +108,7 @@ INSERT INTO `indikator` (`idindikator`, `idkarakteristik`, `kode_indikator`, `in
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jawaban`
+-- Struktur dari tabel `jawaban`
 --
 
 CREATE TABLE `jawaban` (
@@ -116,10 +116,10 @@ CREATE TABLE `jawaban` (
   `kode_jawaban` varchar(20) NOT NULL,
   `jawaban` text NOT NULL,
   `bobot` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `jawaban`
+-- Dumping data untuk tabel `jawaban`
 --
 
 INSERT INTO `jawaban` (`idjawaban`, `kode_jawaban`, `jawaban`, `bobot`) VALUES
@@ -132,7 +132,7 @@ INSERT INTO `jawaban` (`idjawaban`, `kode_jawaban`, `jawaban`, `bobot`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `karakteristik`
+-- Struktur dari tabel `karakteristik`
 --
 
 CREATE TABLE `karakteristik` (
@@ -140,10 +140,10 @@ CREATE TABLE `karakteristik` (
   `kode_karakteristik` varchar(30) NOT NULL,
   `karakteristik` varchar(30) NOT NULL,
   `deskripsi` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `karakteristik`
+-- Dumping data untuk tabel `karakteristik`
 --
 
 INSERT INTO `karakteristik` (`idkarakteristik`, `kode_karakteristik`, `karakteristik`, `deskripsi`) VALUES
@@ -155,7 +155,7 @@ INSERT INTO `karakteristik` (`idkarakteristik`, `kode_karakteristik`, `karakteri
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pertanyaan`
+-- Struktur dari tabel `pertanyaan`
 --
 
 CREATE TABLE `pertanyaan` (
@@ -164,10 +164,10 @@ CREATE TABLE `pertanyaan` (
   `kode_pertanyaan` varchar(25) NOT NULL,
   `pertanyaan` text NOT NULL,
   `bobot` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `pertanyaan`
+-- Dumping data untuk tabel `pertanyaan`
 --
 
 INSERT INTO `pertanyaan` (`idpertanyaan`, `idindikator`, `kode_pertanyaan`, `pertanyaan`, `bobot`) VALUES
@@ -199,17 +199,17 @@ INSERT INTO `pertanyaan` (`idpertanyaan`, `idindikator`, `kode_pertanyaan`, `per
 -- --------------------------------------------------------
 
 --
--- Table structure for table `solusi`
+-- Struktur dari tabel `solusi`
 --
 
 CREATE TABLE `solusi` (
   `idsolusi` int(11) NOT NULL,
   `idtekanan` int(11) NOT NULL,
   `solusi` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `solusi`
+-- Dumping data untuk tabel `solusi`
 --
 
 INSERT INTO `solusi` (`idsolusi`, `idtekanan`, `solusi`) VALUES
@@ -220,7 +220,7 @@ INSERT INTO `solusi` (`idsolusi`, `idtekanan`, `solusi`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tingkattekanan_stres`
+-- Struktur dari tabel `tingkattekanan_stres`
 --
 
 CREATE TABLE `tingkattekanan_stres` (
@@ -228,10 +228,10 @@ CREATE TABLE `tingkattekanan_stres` (
   `tekanan` varchar(50) NOT NULL,
   `range_atas` double NOT NULL,
   `range_bawah` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tingkattekanan_stres`
+-- Dumping data untuk tabel `tingkattekanan_stres`
 --
 
 INSERT INTO `tingkattekanan_stres` (`idtekanan`, `tekanan`, `range_atas`, `range_bawah`) VALUES
@@ -242,7 +242,7 @@ INSERT INTO `tingkattekanan_stres` (`idtekanan`, `tekanan`, `range_atas`, `range
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -253,10 +253,10 @@ CREATE TABLE `user` (
   `instansi` varchar(70) NOT NULL,
   `email` varchar(50) NOT NULL,
   `level` varchar(40) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`iduser`, `username`, `password`, `nama`, `instansi`, `email`, `level`) VALUES
@@ -277,7 +277,7 @@ INSERT INTO `user` (`iduser`, `username`, `password`, `nama`, `instansi`, `email
 --
 
 --
--- Indexes for table `detail_gejala`
+-- Indeks untuk tabel `detail_gejala`
 --
 ALTER TABLE `detail_gejala`
   ADD PRIMARY KEY (`iddetail_gejala`),
@@ -285,115 +285,136 @@ ALTER TABLE `detail_gejala`
   ADD UNIQUE KEY `idtekanan` (`idtekanan`);
 
 --
--- Indexes for table `hasil`
+-- Indeks untuk tabel `hasil`
 --
 ALTER TABLE `hasil`
-  ADD PRIMARY KEY (`idhasil`);
+  ADD PRIMARY KEY (`idhasil`),
+  ADD KEY `iduser` (`iduser`);
 
 --
--- Indexes for table `indikator`
+-- Indeks untuk tabel `indikator`
 --
 ALTER TABLE `indikator`
-  ADD PRIMARY KEY (`idindikator`);
+  ADD PRIMARY KEY (`idindikator`),
+  ADD KEY `idkarakteristik` (`idkarakteristik`);
 
 --
--- Indexes for table `jawaban`
+-- Indeks untuk tabel `jawaban`
 --
 ALTER TABLE `jawaban`
   ADD PRIMARY KEY (`idjawaban`);
 
 --
--- Indexes for table `karakteristik`
+-- Indeks untuk tabel `karakteristik`
 --
 ALTER TABLE `karakteristik`
   ADD PRIMARY KEY (`idkarakteristik`);
 
 --
--- Indexes for table `pertanyaan`
+-- Indeks untuk tabel `pertanyaan`
 --
 ALTER TABLE `pertanyaan`
-  ADD PRIMARY KEY (`idpertanyaan`);
+  ADD PRIMARY KEY (`idpertanyaan`),
+  ADD KEY `idindikator` (`idindikator`);
 
 --
--- Indexes for table `solusi`
+-- Indeks untuk tabel `solusi`
 --
 ALTER TABLE `solusi`
-  ADD PRIMARY KEY (`idsolusi`);
+  ADD PRIMARY KEY (`idsolusi`),
+  ADD KEY `idtekanan` (`idtekanan`);
 
 --
--- Indexes for table `tingkattekanan_stres`
+-- Indeks untuk tabel `tingkattekanan_stres`
 --
 ALTER TABLE `tingkattekanan_stres`
   ADD PRIMARY KEY (`idtekanan`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`iduser`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `hasil`
+-- AUTO_INCREMENT untuk tabel `hasil`
 --
 ALTER TABLE `hasil`
   MODIFY `idhasil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
--- AUTO_INCREMENT for table `indikator`
+-- AUTO_INCREMENT untuk tabel `indikator`
 --
 ALTER TABLE `indikator`
   MODIFY `idindikator` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `jawaban`
+-- AUTO_INCREMENT untuk tabel `jawaban`
 --
 ALTER TABLE `jawaban`
   MODIFY `idjawaban` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `karakteristik`
+-- AUTO_INCREMENT untuk tabel `karakteristik`
 --
 ALTER TABLE `karakteristik`
   MODIFY `idkarakteristik` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `pertanyaan`
+-- AUTO_INCREMENT untuk tabel `pertanyaan`
 --
 ALTER TABLE `pertanyaan`
   MODIFY `idpertanyaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
--- AUTO_INCREMENT for table `solusi`
+-- AUTO_INCREMENT untuk tabel `solusi`
 --
 ALTER TABLE `solusi`
   MODIFY `idsolusi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `tingkattekanan_stres`
+-- AUTO_INCREMENT untuk tabel `tingkattekanan_stres`
 --
 ALTER TABLE `tingkattekanan_stres`
   MODIFY `idtekanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
   MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `detail_gejala`
+-- Ketidakleluasaan untuk tabel `hasil`
 --
-ALTER TABLE `detail_gejala`
-  ADD CONSTRAINT `detail_gejala_ibfk_1` FOREIGN KEY (`idgejala`) REFERENCES `gejala` (`idgejala`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `detail_gejala_ibfk_2` FOREIGN KEY (`idtekanan`) REFERENCES `tingkattekanan_stres` (`idtekanan`);
+ALTER TABLE `hasil`
+  ADD CONSTRAINT `hasil_ibfk_1` FOREIGN KEY (`iduser`) REFERENCES `user` (`iduser`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `indikator`
+--
+ALTER TABLE `indikator`
+  ADD CONSTRAINT `indikator_ibfk_1` FOREIGN KEY (`idkarakteristik`) REFERENCES `karakteristik` (`idkarakteristik`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `pertanyaan`
+--
+ALTER TABLE `pertanyaan`
+  ADD CONSTRAINT `pertanyaan_ibfk_1` FOREIGN KEY (`idindikator`) REFERENCES `indikator` (`idindikator`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `solusi`
+--
+ALTER TABLE `solusi`
+  ADD CONSTRAINT `solusi_ibfk_1` FOREIGN KEY (`idtekanan`) REFERENCES `tingkattekanan_stres` (`idtekanan`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
