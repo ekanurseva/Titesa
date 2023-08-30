@@ -1,5 +1,6 @@
 <?php
 require_once '../controller/tesController.php';
+hapus_cookie();
 
 $indikator = query("SELECT * FROM indikator");
 

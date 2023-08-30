@@ -177,39 +177,45 @@ function hitung($data)
 
             $data_pertanyaan = query("SELECT * FROM pertanyaan WHERE idindikator = $idindikator");
 
+            // Reset total bobot pertanyaan untuk karakteristik saat ini
+            ${"total_bobot_" . $kode_karakteristik} = 0;
+
             foreach ($data_pertanyaan as $dp) {
-                ${"sigma_" . $kode_karakteristik} += $dp['bobot'];
+                ${"total_bobot_" . $kode_karakteristik} += $dp['bobot'];
             }
 
-            foreach ($data_pertanyaan as $dape) {
-                ${"h_" . $dape['kode_pertanyaan']} = (${"sigma_" . $kode_karakteristik} == 0) ? 0 : $dape['bobot'] / ${"sigma_" . $kode_karakteristik};
-
-                $kata2 = $dape['kode_pertanyaan'];
-                $indeks2 = array_search($kata2, $nama_pertanyaan);
-
-                $hitung2 = $nilai_user[$indeks2] * ${"h_" . $dape['kode_pertanyaan']};
-                ${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik} += $hitung2;
-            }
-
-            ${"bayes_" . $kode_karakteristik} = 0;
-            foreach ($data_pertanyaan as $dapert) {
-                $kata3 = $dapert['kode_pertanyaan'];
-                $indeks3 = array_search($kata3, $nama_pertanyaan);
-
-                $hitung3 = $nilai_user[$indeks3] * ${"h_" . $dapert['kode_pertanyaan']};
-                ${"p_h_e_" . $dapert['kode_pertanyaan']} = (${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik} == 0) ? 0 : $hitung3 / ${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik};
-
-                ${"bayes_" . $kode_karakteristik . $dapert['kode_pertanyaan']} = ${"p_h_e_" . $dapert['kode_pertanyaan']} * $dapert['bobot'];
-
-                ${"bayes_" . $kode_karakteristik} += ${"bayes_" . $kode_karakteristik . $dapert['kode_pertanyaan']};
-            }
-
-            ${"hd_" . $kode_karakteristik} = number_format(${"bayes_" . $kode_karakteristik} * 100, 2);
-
-            // echo "Hasil Perhitungan Bayes dari " . $krit['kode_karakteristik'] . " adalah " . ${"hd_" . $krit['kode_karakteristik']} . "<br><br>";
-
-            $bayes_terbesar[] = ${"hd_" . $kode_karakteristik};
+            // Tambahkan total bobot pertanyaan ke sigma karakteristik
+            ${"sigma_" . $kode_karakteristik} += ${"total_bobot_" . $kode_karakteristik};
         }
+
+        foreach ($data_pertanyaan as $dape) {
+            ${"h_" . $dape['kode_pertanyaan']} = (${"sigma_" . $kode_karakteristik} == 0) ? 0 : $dape['bobot'] / ${"sigma_" . $kode_karakteristik};
+
+            $kata2 = $dape['kode_pertanyaan'];
+            $indeks2 = array_search($kata2, $nama_pertanyaan);
+
+            $hitung2 = $nilai_user[$indeks2] * ${"h_" . $dape['kode_pertanyaan']};
+            ${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik} += $hitung2;
+        }
+
+        ${"bayes_" . $kode_karakteristik} = 0;
+        foreach ($data_pertanyaan as $dapert) {
+            $kata3 = $dapert['kode_pertanyaan'];
+            $indeks3 = array_search($kata3, $nama_pertanyaan);
+
+            $hitung3 = $nilai_user[$indeks3] * ${"h_" . $dapert['kode_pertanyaan']};
+            ${"p_h_e_" . $dapert['kode_pertanyaan']} = (${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik} == 0) ? 0 : $hitung3 / ${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik};
+
+            ${"bayes_" . $kode_karakteristik . $dapert['kode_pertanyaan']} = ${"p_h_e_" . $dapert['kode_pertanyaan']} * $dapert['bobot'];
+
+            ${"bayes_" . $kode_karakteristik} += ${"bayes_" . $kode_karakteristik . $dapert['kode_pertanyaan']};
+        }
+
+        ${"hd_" . $kode_karakteristik} = number_format(${"bayes_" . $kode_karakteristik} * 100, 2);
+
+        echo "Hasil Perhitungan Bayes dari " . $krit['kode_karakteristik'] . " adalah " . ${"hd_" . $krit['kode_karakteristik']} . "<br><br>";
+
+        $bayes_terbesar[] = ${"hd_" . $kode_karakteristik};
     }
 
     $cf_besar = max($bayes_terbesar);
@@ -238,24 +244,28 @@ function hitung($data)
     // var_dump($kategori_terpilih);
     // echo "Kategorinya adalah " . $kategori_terpilih . "<br>";
 
-    if(isset($_COOKIE['mGpTw'])) {
+    if (isset($_COOKIE['mGpTw'])) {
         $iduser = dekripsi($_COOKIE['mGpTw']);
-    
+
         $query = "INSERT INTO hasil
                         VALUES
                         (NULL, '$iduser', '$kategori_terpilih', '$cf_besar', CURRENT_TIMESTAMP())";
-    
+
         mysqli_query($conn, $query);
-    
+
         return mysqli_affected_rows($conn);
     } else {
-        setcookie('cf_besar', $cf_besar, time() + 10800);
-        setcookie('kategori_terpilih', $kategori_terpilih, time() + 10800);
-        // setcookie('kategori_terpilih', "sedang", time() + 10800);
+        // setcookie('cf_besar', $cf_besar, time() + 10800);
+        // setcookie('kategori_terpilih', $kategori_terpilih, time() + 10800);
+        // // setcookie('kategori_terpilih', "sedang", time() + 10800);
 
-        return 1;
+        // return 1;
+        $query = "INSERT INTO temporary
+                        VALUES
+                        (NULL, '$kategori_terpilih', '$cf_besar', CURRENT_TIMESTAMP())";
+        mysqli_query($conn, $query);
+        return mysqli_affected_rows($conn);
     }
-
 }
 
 function hitung_guest($data)
@@ -353,10 +363,8 @@ function hitung_guest($data)
         }
     }
 
-    $_SESSION['hasil_perhitungan'] = array(
-        'cf_besar' => $cf_besar,
-        'kategori_terpilih' => $kategori_terpilih
-    );
+
+
 }
 
 function create_kategori()

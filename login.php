@@ -79,7 +79,7 @@ if (isset($_POST["submit_login"])) {
                   </div>
                   <div class="d-flex align-items-center justify-content-between mb-4">
                     <div class="form-check">
-                      <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" />
+                      <input class="form-check-input primary" type="checkbox" value="" id="show-password" />
                       <label class="form-check-label text-dark" id="show-password" for="flexCheckChecked"> Tampil
                         Password </label>
                     </div>

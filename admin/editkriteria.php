@@ -1,5 +1,6 @@
 <?php
 require_once '../controller/kriteriaController.php';
+hapus_cookie();
 // $id = dekripsi($_COOKIE['mGpTw']);
 // $user = query("SELECT * FROM user WHERE iduser = $id")[0];
 
@@ -42,8 +43,8 @@ if (isset($_POST["edit_kriteria"])) {
     data-sidebar-position="fixed" data-header-position="fixed">
     <!-- Sidebar Start -->
     <?php
-        require_once '../sidebar/sidebar_admin.php';
-        ?>
+    require_once '../sidebar/sidebar_admin.php';
+    ?>
     <!--  Sidebar End -->
     <!--  Main wrapper -->
     <div class="body-wrapper">

@@ -1,16 +1,16 @@
 <?php
 // Cek apakah hasil perhitungan ada dalam cookie
-// if (isset($_COOKIE['cf_besar']) && isset($_COOKIE['kategori_terpilih'])) {
-//     $cf_besar = $_COOKIE['cf_besar'];
-//     $kategori_terpilih = $_COOKIE['kategori_terpilih'];
+if (isset($_COOKIE['cf_besar']) && isset($_COOKIE['kategori_terpilih'])) {
+    $cf_besar = $_COOKIE['cf_besar'];
+    $kategori_terpilih = $_COOKIE['kategori_terpilih'];
 
-//     // Hapus cookie yang sudah tidak diperlukan lagi
-//     setcookie('cf_besar', '', time() - 3600);
-//     setcookie('kategori_terpilih', '', time() - 3600);
-// } else {
-//     echo "Hasil perhitungan tidak tersedia.";
-//     exit;
-// }
+    // Hapus cookie yang sudah tidak diperlukan lagi
+    setcookie('cf_besar', '', time() - 3600);
+    setcookie('kategori_terpilih', '', time() - 3600);
+} else {
+    echo "Hasil perhitungan tidak tersedia.";
+    exit;
+}
 ?>
 
 <!DOCTYPE html>

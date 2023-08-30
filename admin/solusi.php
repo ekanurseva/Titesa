@@ -1,5 +1,6 @@
 <?php
 require_once '../controller/solusiController.php';
+hapus_cookie();
 
 $solusi = query("SELECT * FROM solusi");
 $kategori = query("SELECT * FROM tingkattekanan_stres");

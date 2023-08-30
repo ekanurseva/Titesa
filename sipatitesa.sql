@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Waktu pembuatan: 29 Agu 2023 pada 17.28
--- Versi server: 10.4.22-MariaDB
--- Versi PHP: 8.0.15
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 30 Agu 2023 pada 21.38
+-- Versi server: 10.4.28-MariaDB
+-- Versi PHP: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,20 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `detail_gejala`
---
-
-CREATE TABLE `detail_gejala` (
-  `iddetail_gejala` int(11) NOT NULL,
-  `idgejala` int(11) NOT NULL,
-  `idtekanan` int(11) NOT NULL,
-  `banding_gejala` varchar(50) NOT NULL,
-  `rentang-gejala` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Struktur dari tabel `hasil`
 --
 
@@ -47,7 +33,7 @@ CREATE TABLE `hasil` (
   `hsl_tekanan` varchar(50) NOT NULL,
   `bobot` double NOT NULL,
   `tgl` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `hasil`
@@ -56,7 +42,6 @@ CREATE TABLE `hasil` (
 INSERT INTO `hasil` (`idhasil`, `iduser`, `hsl_tekanan`, `bobot`, `tgl`) VALUES
 (3, 5, 'tinggi', 72.4, '2023-08-29 03:21:23'),
 (4, 5, 'tinggi', 90, '2023-08-29 03:52:48'),
-(5, 1, 'sedang', 61.03, '2023-08-29 04:32:04'),
 (8, 4, 'tinggi', 71.14, '2023-08-29 07:46:50'),
 (9, 4, 'tinggi', 75.61, '2023-08-29 07:48:11'),
 (11, 7, 'tinggi', 81.03, '2023-08-29 07:58:47'),
@@ -71,14 +56,53 @@ INSERT INTO `hasil` (`idhasil`, `iduser`, `hsl_tekanan`, `bobot`, `tgl`) VALUES
 (22, 8, 'tinggi', 71.54, '2023-08-29 08:24:50'),
 (23, 8, 'tinggi', 70, '2023-08-29 08:27:18'),
 (24, 8, 'tinggi', 68.52, '2023-08-29 08:27:55'),
-(27, 1, 'tinggi', 82.88, '2023-08-29 08:44:18'),
-(29, 1, 'tinggi', 78.44, '2023-08-29 08:45:51'),
-(30, 1, 'tinggi', 83.33, '2023-08-29 08:46:36'),
 (31, 7, 'tinggi', 69.07, '2023-08-29 09:12:13'),
 (32, 7, 'tinggi', 77.7, '2023-08-29 09:14:54'),
 (33, 5, 'tinggi', 88.18, '2023-08-29 09:17:48'),
 (36, 7, 'tinggi', 66.67, '2023-08-29 09:45:32'),
-(37, 1, 'tinggi', 85.86, '2023-08-29 10:08:14');
+(43, 19, 'tinggi', 83.51, '2023-08-30 04:49:31'),
+(44, 19, 'sedang', 75.71, '2023-08-30 04:50:16'),
+(45, 19, 'rendah', 0, '2023-08-30 04:54:02'),
+(46, 5, 'tinggi', 74.55, '2023-08-30 09:31:54'),
+(47, 5, 'tinggi', 82.86, '2023-08-30 16:08:44'),
+(48, 5, 'tinggi', 77.62, '2023-08-30 16:12:04'),
+(49, 5, 'tinggi', 77.62, '2023-08-30 16:13:20'),
+(50, 5, 'tinggi', 75.37, '2023-08-30 16:18:11'),
+(51, 5, 'rendah', 0, '2023-08-30 16:40:25'),
+(52, 5, 'rendah', 0, '2023-08-30 16:40:30'),
+(53, 5, 'tinggi', 75.37, '2023-08-30 16:41:30'),
+(54, 5, 'tinggi', 75.37, '2023-08-30 16:42:41'),
+(55, 5, 'sedang', 70.21, '2023-08-30 16:50:05'),
+(56, 5, 'sedang', 70.21, '2023-08-30 16:55:29'),
+(57, 5, 'sedang', 70.21, '2023-08-30 16:56:21'),
+(58, 5, 'sedang', 70.21, '2023-08-30 16:56:21'),
+(59, 5, 'rendah', 80, '2023-08-30 17:02:15'),
+(60, 5, 'sedang', 70.21, '2023-08-30 17:02:52'),
+(61, 5, 'sedang', 70.21, '2023-08-30 17:03:47'),
+(62, 5, 'rendah', 5.87, '2023-08-30 17:04:39'),
+(63, 5, 'sedang', 70.21, '2023-08-30 17:07:16'),
+(64, 5, 'sedang', 70.21, '2023-08-30 17:11:23'),
+(65, 5, 'sedang', 70.21, '2023-08-30 17:11:43'),
+(66, 5, 'sedang', 70.21, '2023-08-30 17:38:37'),
+(67, 5, 'sedang', 70.21, '2023-08-30 17:39:42'),
+(68, 5, 'sedang', 70.21, '2023-08-30 17:39:44'),
+(69, 5, 'sedang', 70.21, '2023-08-30 17:57:40'),
+(70, 5, 'sedang', 70.21, '2023-08-30 17:58:50'),
+(71, 5, 'sedang', 70.21, '2023-08-30 17:59:45'),
+(72, 5, 'tinggi', 90, '2023-08-30 18:00:32'),
+(73, 5, 'tinggi', 90, '2023-08-30 18:00:34'),
+(74, 5, 'rendah', 60, '2023-08-30 18:03:47'),
+(75, 5, 'rendah', 60, '2023-08-30 18:04:08'),
+(76, 5, 'sedang', 70.21, '2023-08-30 18:04:55'),
+(77, 5, 'sedang', 70.21, '2023-08-30 18:16:23'),
+(78, 5, 'sedang', 70.21, '2023-08-30 18:19:57'),
+(79, 5, 'sedang', 70.21, '2023-08-30 18:20:03'),
+(80, 5, 'sedang', 70.21, '2023-08-30 18:23:40'),
+(81, 5, 'sedang', 70.21, '2023-08-30 18:24:13'),
+(82, 8, 'tinggi', 91.3, '2023-08-30 19:17:37'),
+(83, 8, 'rendah', 0, '2023-08-30 19:21:34'),
+(84, 8, 'rendah', 0, '2023-08-30 19:24:04'),
+(85, 8, 'rendah', 0, '2023-08-30 19:32:11');
 
 -- --------------------------------------------------------
 
@@ -91,7 +115,7 @@ CREATE TABLE `indikator` (
   `idkarakteristik` int(11) NOT NULL,
   `kode_indikator` varchar(25) NOT NULL,
   `indikator` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `indikator`
@@ -116,7 +140,7 @@ CREATE TABLE `jawaban` (
   `kode_jawaban` varchar(20) NOT NULL,
   `jawaban` text NOT NULL,
   `bobot` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `jawaban`
@@ -140,7 +164,7 @@ CREATE TABLE `karakteristik` (
   `kode_karakteristik` varchar(30) NOT NULL,
   `karakteristik` varchar(30) NOT NULL,
   `deskripsi` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data untuk tabel `karakteristik`
@@ -150,7 +174,7 @@ INSERT INTO `karakteristik` (`idkarakteristik`, `kode_karakteristik`, `karakteri
 (1, 'k1', 'Emosi', 'Emosi merupakan salah satu penyebab terjadinya stres, karna dari emosi terkadang dapat merasa cepat marah, bimbang, dan lain-lain.'),
 (2, 'k2', 'Perilaku', 'Perilaku dapat mempengaruhi seseorang karena ketidak sesuian keinginan dengan kenyataan. '),
 (3, 'k3', 'Pikiran', 'Pikiran adalah penyebab utama tekanan dan stres, karena Ketika suatu keinginan tidak sesuai atau tercapai maka akan menyebabkan tekanan terhadap otak.'),
-(5, 'k4', 'Fisik', 'Fisik adalah .........');
+(5, 'k4', 'Fisik', 'Fisik adalah dampak yang muncul ketika seseorang berhadapan dengan hal-hal yang menggangu aktivitasnya.');
 
 -- --------------------------------------------------------
 
@@ -164,7 +188,7 @@ CREATE TABLE `pertanyaan` (
   `kode_pertanyaan` varchar(25) NOT NULL,
   `pertanyaan` text NOT NULL,
   `bobot` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `pertanyaan`
@@ -206,7 +230,7 @@ CREATE TABLE `solusi` (
   `idsolusi` int(11) NOT NULL,
   `idtekanan` int(11) NOT NULL,
   `solusi` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `solusi`
@@ -220,6 +244,19 @@ INSERT INTO `solusi` (`idsolusi`, `idtekanan`, `solusi`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `temporary`
+--
+
+CREATE TABLE `temporary` (
+  `id` int(11) NOT NULL,
+  `hsl_tekanan` varchar(50) NOT NULL,
+  `bobot` double NOT NULL,
+  `tgl` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `tingkattekanan_stres`
 --
 
@@ -228,16 +265,16 @@ CREATE TABLE `tingkattekanan_stres` (
   `tekanan` varchar(50) NOT NULL,
   `range_atas` double NOT NULL,
   `range_bawah` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data untuk tabel `tingkattekanan_stres`
 --
 
 INSERT INTO `tingkattekanan_stres` (`idtekanan`, `tekanan`, `range_atas`, `range_bawah`) VALUES
-(1, 'rendah', 107.893, 0),
-(2, 'sedang', 215.787, 107.894),
-(3, 'tinggi', 323.68, 215.788);
+(1, 'rendah', 105.323, 0),
+(2, 'sedang', 210.647, 105.324),
+(3, 'tinggi', 315.97, 210.648);
 
 -- --------------------------------------------------------
 
@@ -253,36 +290,26 @@ CREATE TABLE `user` (
   `instansi` varchar(70) NOT NULL,
   `email` varchar(50) NOT NULL,
   `level` varchar(40) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`iduser`, `username`, `password`, `nama`, `instansi`, `email`, `level`) VALUES
-(1, 'eka', '$2y$10$/ZMuY1mfa5LNd2pqV3JZbOBSZqcYHLIjS8eJ6SgsMN0WEZaEuuzty', 'Eka Nurseva Saniyah', 'UMC', 'ekanursevas@gmail.com', ''),
-(3, 'eka21', '$2y$10$p5BwoZv6/ZMXVjydwqGWg.2Aq75/HdWc06xJd0PRNTV1hFSLrbDaW', 'Eka Nurseva', 'UMC', 'ekanurseva@gmail.com', 'User'),
-(4, 'mtiwi', '$2y$10$T0g27XeaemTWbwNKeGp0UeLK8b6Os2qvgf4aDx0OrSV7THq9hPN7m', 'M. G. Pratiwi', 'UMC', 'mgpratiwwi@gmail.com', 'Admin'),
+(4, 'mtiwi', '$2y$10$bRRCwTy2ww50XeySYDil8edhLQU6FF7UB9Qk7mStlM0/dpQ3v6PtK', 'M. G. Pratiwi', 'UMC', 'mgpratiwwi@gmail.com', 'Admin'),
 (5, 'admin', '$2y$10$5T1oMI835YuZGrW5jBGUpuOOmjT.9rro.Sz3lsesvGL0vrcFnmVRC', 'admin', 'admin', 'admin@gmail.com', 'Admin'),
 (6, 'hhh', '$2y$10$qTjW9rB/jOAq3aPB7.oIX.9FlsEbthowfkhQGUnBBOgkxmoE6mi9m', 'hhh', 'UMC', 'hhh@gmail.com', 'User'),
 (7, 'siapa', '$2y$10$o6l/ZEfhZzM0B0ycIcagleisUaUKo/KFGLCoQbUScYMzf.ZaWPtRG', 'Siapa Aja Ya', 'Universitas Muhammadiyah Cireb', 'siapaaja@gmail.com', 'User'),
 (8, 'hh2', '$2y$10$0giRT9JYfSiA7F1SRWRPfuuid0vd0bm4X1B3ArImqPtgY9IZjbZv2', 'Haha', 'UMC Ughul', 'hahaahaha@gmail.com', 'User'),
-(9, 'Guest', 'Guest', 'Guest', 'Guest', 'Guest@example.com', 'Guest'),
-(10, 'Guest', 'Guest', 'Guest', 'Guest', 'Guest@example.com', 'Guest'),
-(11, 'Guest', 'Guest', 'Guest', 'Guest', 'Guest@example.com', 'Guest'),
-(12, 'Guest', 'Guest', 'Guest', 'Guest', 'Guest@example.com', 'Guest');
+(17, 'mn', '$2y$10$w/BQzTKPyBtT2uJ2txNoQ.fQm9ka/tQLdRs8wqG4b8BON9/CXxBGu', 'gdds', 'umc', 'stru@gdfh', 'User'),
+(18, 'mmg', '$2y$10$lzK6NZ1wUFNLTFUSxz6MmuxNphjl9PCn1jaDkb9AMiYMcULuI5BrO', 'mah', 'admin', 'mamah@gmail.com', 'Admin'),
+(19, 'tiww', '$2y$10$rUcbpqebSftqD2t3M5P7vubgsO7AaGCuo3szPJPmHccoprVgkhiq2', 'TW', 'umc', 'mgpratiwwi@gmail.com', 'User'),
+(20, 'wii', '$2y$10$xgN5o.0Be.WCtaD/BgFhT.qUq/EEHISDOFs6rRZabVv2lRE8.OzT6', 'ww', 'admin', 'mgpratiwwi@gmail.com', 'Admin');
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indeks untuk tabel `detail_gejala`
---
-ALTER TABLE `detail_gejala`
-  ADD PRIMARY KEY (`iddetail_gejala`),
-  ADD UNIQUE KEY `idgejala` (`idgejala`),
-  ADD UNIQUE KEY `idtekanan` (`idtekanan`);
 
 --
 -- Indeks untuk tabel `hasil`
@@ -325,6 +352,12 @@ ALTER TABLE `solusi`
   ADD KEY `idtekanan` (`idtekanan`);
 
 --
+-- Indeks untuk tabel `temporary`
+--
+ALTER TABLE `temporary`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `tingkattekanan_stres`
 --
 ALTER TABLE `tingkattekanan_stres`
@@ -344,7 +377,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `hasil`
 --
 ALTER TABLE `hasil`
-  MODIFY `idhasil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `idhasil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT untuk tabel `indikator`
@@ -368,13 +401,19 @@ ALTER TABLE `karakteristik`
 -- AUTO_INCREMENT untuk tabel `pertanyaan`
 --
 ALTER TABLE `pertanyaan`
-  MODIFY `idpertanyaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `idpertanyaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT untuk tabel `solusi`
 --
 ALTER TABLE `solusi`
   MODIFY `idsolusi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `temporary`
+--
+ALTER TABLE `temporary`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `tingkattekanan_stres`
@@ -386,7 +425,7 @@ ALTER TABLE `tingkattekanan_stres`
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

@@ -1,5 +1,6 @@
 <?php
 require_once '../controller/tesController.php';
+hapus_cookie();
 
 $idpertanyaan = $_GET['idsoal'];
 $pertanyaan = query("SELECT * FROM pertanyaan WHERE idpertanyaan = $idpertanyaan")[0];

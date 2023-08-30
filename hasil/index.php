@@ -42,8 +42,6 @@ $solusi = query("SELECT * FROM solusi WHERE idtekanan = $idkategori");
       require_once('../sidebar/sidebar_user.php');
     } elseif ($user['level'] === "Admin") {
       require_once('../sidebar/sidebar_admin.php');
-    } elseif ($user['level'] === "Guest") {
-      require_once('../sidebar/sidebar.php');
     } else {
       // Jika peran tidak dikenali, Anda dapat menambahkan pesan error atau tindakan lain sesuai kebutuhan
       echo "Error: Peran pengguna tidak valid.";
@@ -65,7 +63,13 @@ $solusi = query("SELECT * FROM solusi WHERE idtekanan = $idkategori");
           <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
               <li class="nav-item">
-                <a class="nav-link text-primary active" href="profil.php"> My Profile</a>
+              <?php
+              if ($user['level'] === "User") {
+                echo '<a class="nav-link text-primary active" href="../user/profil.php"> My Profile</a>';
+              } else {
+                echo '<a class="nav-link text-primary active" href="../admin/profil.php"> My Profile</a>';
+              }
+              ?>
               </li>
             </ul>
           </div>
@@ -96,9 +100,9 @@ $solusi = query("SELECT * FROM solusi WHERE idtekanan = $idkategori");
           <div>
             <ul class="fw-bold mb-0 justify fs-6">Solusi Penanganan:</ul>
             <?php foreach ($solusi as $ds): ?>
-              <li class="ms-4">
-                <?= $ds['solusi']; ?>
-              </li>
+                <li class="ms-4">
+                  <?= $ds['solusi']; ?>
+                </li>
             <?php endforeach; ?>
           </div>
 

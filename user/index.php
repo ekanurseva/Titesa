@@ -7,6 +7,22 @@
   <title>SIPATITESA</title>
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/Logo4.png" />
   <link rel="stylesheet" href="../assets/css/styles.min.css" />
+  <style>
+        #background-container {
+            background-color: #ffff; /* Warna latar belakang container */
+            display: flex;
+            align-items: center;
+            text-align: center;
+            
+            justify-content: center;
+            height: 100vh; /* Tinggi container sesuai tinggi viewport */
+        }
+
+        #dashboard-image {
+            max-width: 100%; /* Maksimum lebar gambar adalah lebar container */
+            max-height: 80vh; /* Maksimum tinggi gambar agar tidak terlalu besar */
+        }
+        </style>
 </head>
 
 <body>
@@ -49,26 +65,16 @@
       </header>
       <!--  Header End -->
       <div class="container-fluid">
-        <div class="container mt-3">
-          <h2>Riwayat Tes</h2>
-          <table class="table">
-            <thead>
-              <tr class="table-primary">
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Default</td>
-                <td>Defaultson</td>
-                <td>def@somemail.com</td>
-              </tr>
-
-
-            </tbody>
-          </table>
+        <div style="width: 100%;" class="content text-center">
+          <h1 style="margin-top: 25px;  color: #5d87ff; padding: 30px 35px"> Welcome to Sistem Pakar Identifikasi Tingkat Tekanan Stres Akademik Pada Mahasiswa </h1>
+          <div class="container mt-3">
+            <div class="container-fluid" id="background-container">
+                <div class="container mt-3">
+                  <img src="../assets/images/logos/Logo4.png" alt="" class="img-fluid" id="dashboard-image">
+                  <!-- Konten lain di dalam container -->
+                </div>
+              </div>
+          </div>
         </div>
       </div>
 

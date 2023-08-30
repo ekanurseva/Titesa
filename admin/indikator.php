@@ -1,5 +1,6 @@
 <?php
 require_once '../controller/indikatorController.php';
+hapus_cookie();
 
 $kriteria = query("SELECT * FROM karakteristik");
 $indikator = query("SELECT * FROM indikator");

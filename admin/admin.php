@@ -1,6 +1,7 @@
 <?php
 require_once '../controller/userController.php';
-// $id = dekripsi($_COOKIE['SPASAGALINENS']);
+hapus_cookie();
+// $id = dekripsi($_COOKIE['SIPATITESA']);
 // $user = query("SELECT * FROM user WHERE iduser = $id")[0];
 
 if (isset($_POST["submit_admin"])) {

@@ -1,5 +1,6 @@
 <?php
 require_once '../controller/tesController.php';
+// hapus_cookie();
 
 $id = dekripsi($_COOKIE['mGpTw']);
 $user = query("SELECT * FROM user WHERE iduser = $id")[0];
@@ -150,11 +151,9 @@ if (isset($_POST['submit'])) {
                     ?>
                   </div>
                 </div>
-                <a href="tes2.php">
-                  <button type="submit" class="btn btn-secondary w-100 py-8 fs-4 mb-4 rounded-2"
-                    name=" submit">Submit</button>
-                </a>
 
+                <button type="submit" class="btn btn-secondary w-100 py-8 fs-4 mb-4 rounded-2"
+                  name=" submit">Submit</button>
             </form>
             <!-- Daftar Pertanyaan Selesai-->
 

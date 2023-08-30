@@ -1,5 +1,6 @@
 <?php
 require_once '../controller/indikatorController.php';
+hapus_cookie();
 // $id = dekripsi($_COOKIE['mGpTw']);
 // $user = query("SELECT * FROM user WHERE iduser = $id")[0];
 

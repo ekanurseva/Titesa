@@ -1,11 +1,11 @@
 <?php
 require_once '../controller/tesController.php';
-hapus_cookie();
-// if (isset($_COOKIE['cf_besar']) || isset($_COOKIE['kategori_terpilih']) || isset($_COOKIE['hasil'])) {
-//     setcookie('cf_besar', '', time() - 3600);
-//     setcookie('kategori_terpilih', '', time() - 3600);
-//     setcookie('hasil', '', time() - 3600);
-// }
+// hapus_cookie();
+// // if (isset($_COOKIE['cf_besar']) || isset($_COOKIE['kategori_terpilih']) || isset($_COOKIE['hasil'])) {
+// //     setcookie('cf_besar', '', time() - 3600);
+// //     setcookie('kategori_terpilih', '', time() - 3600);
+// //     setcookie('hasil', '', time() - 3600);
+// // }
 
 $jumlah_pertanyaan = jumlah_data("SELECT * FROM pertanyaan");
 
@@ -18,18 +18,18 @@ $pertanyaan2 = query("SELECT * FROM pertanyaan LIMIT $jumper2 OFFSET $jumper1");
 $jawaban = query("SELECT * FROM jawaban");
 
 if (isset($_POST['submit'])) {
-    if(hitung($_POST > 0)) {
-        echo "
-            <script>
-                document.location.href='hasil.php';
-            </script>
-          ";
+    if (hitung($_POST > 0)) {
+        // echo "
+        //     <script>
+        //         document.location.href='hasil.php';
+        //     </script>
+        //   ";
     } else {
-        echo "
-            <script>
-                document.location.href='guest.php';
-            </script>
-          ";
+        // echo "
+        //     <script>
+        //         document.location.href='guest.php';
+        //     </script>
+        //   ";
     }
 }
 ?>
@@ -124,7 +124,6 @@ if (isset($_POST['submit'])) {
                     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                         <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                             <li class="nav-item">
-                                <a class="nav-link text-primary active" href="profil.php"> My Profile</a>
                             </li>
                         </ul>
                     </div>
@@ -140,7 +139,7 @@ if (isset($_POST['submit'])) {
                             <div class="row pt-lg-5">
                                 <div class="col-lg-6 col-md-8 mx-auto">
                                     <a href="" class="text-nowrap logo-img text-center d-block py-2 w-100">
-                                        <img src="../assets/images/logos/Logo4.png" width="50" alt="" />
+                                        <img src="assets/images/logos/Logo4.png" width="50" alt="" />
                                     </a>
                                     <h3 class="fw-bold">Tes Tingkat Tekanan Stres Akademik</h3>
                                     <p class="lead">Jawablah pertanyaan dibawah ini !</p>
@@ -204,8 +203,12 @@ if (isset($_POST['submit'])) {
                                         ?>
                                     </div>
                                 </div>
-                                    <button type="submit" class="btn btn-secondary w-100 py-8 fs-4 mb-4 rounded-2" name="submit">Submit</button>
+
+                                <button type="submit" class="btn btn-secondary w-100 py-8 fs-4 mb-4 rounded-2"
+                                    name=" submit">Submit</button>
                         </form>
+                        <!-- Daftar Pertanyaan Selesai-->
+
                         <!-- Daftar Pertanyaan Selesai-->
 
                     </div>

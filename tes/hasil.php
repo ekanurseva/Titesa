@@ -1,13 +1,17 @@
 <?php
-    require_once "../controller/tesController.php";
-    $nama_kategori = $_COOKIE['kategori_terpilih'];
+require_once "../controller/tesController.php";
 
-    $kategori = query("SELECT * FROM tingkattekanan_stres WHERE tekanan = '$nama_kategori'")[0];
+// $nama_kategori = $_COOKIE['kategori_terpilih'];
 
-    $idkategori = $kategori['idtekanan'];
-    $solusi = query("SELECT * FROM solusi WHERE idtekanan = $idkategori");
+$data_hasil = query("SELECT * FROM temporary");
 
-    $cf_besar = $_COOKIE['cf_besar'];
+$nama_kategori = $data_hasil['hsl_tekanan'];
+$kategori = query("SELECT * FROM tingkattekanan_stres WHERE tekanan = '$nama_kategori'")[0];
+
+$idkategori = $kategori['idtekanan'];
+$solusi = query("SELECT * FROM solusi WHERE idtekanan = $idkategori");
+
+$cf_besar = $_COOKIE['cf_besar'];
 ?>
 
 <!DOCTYPE html>
