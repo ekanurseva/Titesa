@@ -19,7 +19,7 @@ $jawaban = query("SELECT * FROM jawaban");
 
 if (isset($_POST['submit'])) {
     // hitung($_POST);
-    if (hitung($_POST > 0)) {
+    if (hitung($_POST) > 0) {
         echo "
             <script>
                 document.location.href='hasil.php';
