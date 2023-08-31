@@ -178,42 +178,61 @@ function hitung($data)
             $data_pertanyaan = query("SELECT * FROM pertanyaan WHERE idindikator = $idindikator");
 
             // Reset total bobot pertanyaan untuk karakteristik saat ini
-            ${"total_bobot_" . $kode_karakteristik} = 0;
 
             foreach ($data_pertanyaan as $dp) {
-                ${"total_bobot_" . $kode_karakteristik} += $dp['bobot'];
+                ${"sigma_" . $kode_karakteristik} += $dp['bobot'];   
             }
+        }
+        // echo "Nilai sigma H dari " . $kode_karakteristik . " adalah " . ${"sigma_" . $kode_karakteristik} . "<br><br>";
 
-            // Tambahkan total bobot pertanyaan ke sigma karakteristik
-            ${"sigma_" . $kode_karakteristik} += ${"total_bobot_" . $kode_karakteristik};
+        foreach ($data_indikator as $di) {
+            $idindikator = $di['idindikator'];
+
+            $data_pertanyaan = query("SELECT * FROM pertanyaan WHERE idindikator = $idindikator");
+
+            // Reset total bobot pertanyaan untuk karakteristik saat ini
+            foreach ($data_pertanyaan as $dape) {
+                ${"h_" . $dape['kode_pertanyaan']} = (${"sigma_" . $kode_karakteristik} == 0) ? 0 : $dape['bobot'] / ${"sigma_" . $kode_karakteristik};
+
+                // echo "Nilai P(H)". $dape['kode_pertanyaan'] . " hasil dari " . $dape['bobot'] . " / " . ${"sigma_" . $kode_karakteristik} . " adalah " .  ${"h_" . $dape['kode_pertanyaan']}  . "<br>";
+    
+                $kata2 = $dape['kode_pertanyaan'];
+                $indeks2 = array_search($kata2, $nama_pertanyaan);
+    
+                $hitung2 = $nilai_user[$indeks2] * ${"h_" . $dape['kode_pertanyaan']};
+                // echo "Hasil dari P(E|H)". $dape['kode_pertanyaan'] . " x P(H)" . $dape['kode_pertanyaan'] . " yaitu " . $nilai_user[$indeks2] . " x " . ${"h_" . $dape['kode_pertanyaan']} . " adalah " . $hitung2 . "<br><br>";
+                ${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik} += $hitung2;
+            }
         }
 
-        foreach ($data_pertanyaan as $dape) {
-            ${"h_" . $dape['kode_pertanyaan']} = (${"sigma_" . $kode_karakteristik} == 0) ? 0 : $dape['bobot'] / ${"sigma_" . $kode_karakteristik};
-
-            $kata2 = $dape['kode_pertanyaan'];
-            $indeks2 = array_search($kata2, $nama_pertanyaan);
-
-            $hitung2 = $nilai_user[$indeks2] * ${"h_" . $dape['kode_pertanyaan']};
-            ${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik} += $hitung2;
-        }
+        // echo "Hasil dari P(E|H)". $dape['kode_pertanyaan'] . " x P(H)" . $dape['kode_pertanyaan'] . " adalah " . ${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik} . "<br><br>";
 
         ${"bayes_" . $kode_karakteristik} = 0;
-        foreach ($data_pertanyaan as $dapert) {
-            $kata3 = $dapert['kode_pertanyaan'];
-            $indeks3 = array_search($kata3, $nama_pertanyaan);
 
-            $hitung3 = $nilai_user[$indeks3] * ${"h_" . $dapert['kode_pertanyaan']};
-            ${"p_h_e_" . $dapert['kode_pertanyaan']} = (${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik} == 0) ? 0 : $hitung3 / ${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik};
+        foreach ($data_indikator as $di) {
+            $idindikator = $di['idindikator'];
 
-            ${"bayes_" . $kode_karakteristik . $dapert['kode_pertanyaan']} = ${"p_h_e_" . $dapert['kode_pertanyaan']} * $dapert['bobot'];
-
-            ${"bayes_" . $kode_karakteristik} += ${"bayes_" . $kode_karakteristik . $dapert['kode_pertanyaan']};
+            $data_pertanyaan = query("SELECT * FROM pertanyaan WHERE idindikator = $idindikator");
+            foreach ($data_pertanyaan as $dapert) {
+                $kata3 = $dapert['kode_pertanyaan'];
+                $indeks3 = array_search($kata3, $nama_pertanyaan);
+    
+                $hitung3 = $nilai_user[$indeks3] * ${"h_" . $dapert['kode_pertanyaan']};
+                
+                ${"p_h_e_" . $dapert['kode_pertanyaan']} = (${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik} == 0) ? 0 : $hitung3 / ${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik};
+                
+                // echo "Hasil P(H|E)" . $dapert['kode_pertanyaan'] . " yaitu (" . $nilai_user[$indeks3] . " x " . ${"h_" . $dapert['kode_pertanyaan']} . ") / " . ${"p_h_" . $kode_karakteristik . "xh_" . $kode_karakteristik} . " adalah " . ${"p_h_e_" . $dapert['kode_pertanyaan']} . "<br>";
+    
+                ${"bayes_" . $kode_karakteristik . $dapert['kode_pertanyaan']} = ${"p_h_e_" . $dapert['kode_pertanyaan']} * $dapert['bobot'];
+    
+                ${"bayes_" . $kode_karakteristik} += ${"bayes_" . $kode_karakteristik . $dapert['kode_pertanyaan']};
+            }
         }
+
 
         ${"hd_" . $kode_karakteristik} = number_format(${"bayes_" . $kode_karakteristik} * 100, 2);
 
-        echo "Hasil Perhitungan Bayes dari " . $krit['kode_karakteristik'] . " adalah " . ${"hd_" . $krit['kode_karakteristik']} . "<br><br>";
+        // echo "Hasil Perhitungan Bayes dari " . $krit['kode_karakteristik'] . " adalah " . ${"hd_" . $krit['kode_karakteristik']} . "<br><br>";
 
         $bayes_terbesar[] = ${"hd_" . $kode_karakteristik};
     }
@@ -251,9 +270,9 @@ function hitung($data)
                         VALUES
                         (NULL, '$iduser', '$kategori_terpilih', '$cf_besar', CURRENT_TIMESTAMP())";
 
-        mysqli_query($conn, $query);
+        // mysqli_query($conn, $query);
 
-        return mysqli_affected_rows($conn);
+        // return mysqli_affected_rows($conn);
     } else {
         // setcookie('cf_besar', $cf_besar, time() + 10800);
         // setcookie('kategori_terpilih', $kategori_terpilih, time() + 10800);
@@ -263,9 +282,15 @@ function hitung($data)
         $query = "INSERT INTO temporary
                         VALUES
                         (NULL, '$kategori_terpilih', '$cf_besar', CURRENT_TIMESTAMP())";
-        mysqli_query($conn, $query);
-        return mysqli_affected_rows($conn);
+        // mysqli_query($conn, $query);
+
+        // return mysqli_affected_rows($conn);
     }
+    // var_dump($query);
+
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
 }
 
 function hitung_guest($data)

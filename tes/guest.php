@@ -18,18 +18,19 @@ $pertanyaan2 = query("SELECT * FROM pertanyaan LIMIT $jumper2 OFFSET $jumper1");
 $jawaban = query("SELECT * FROM jawaban");
 
 if (isset($_POST['submit'])) {
+    // hitung($_POST);
     if (hitung($_POST > 0)) {
-        // echo "
-        //     <script>
-        //         document.location.href='hasil.php';
-        //     </script>
-        //   ";
+        echo "
+            <script>
+                document.location.href='hasil.php';
+            </script>
+          ";
     } else {
-        // echo "
-        //     <script>
-        //         document.location.href='guest.php';
-        //     </script>
-        //   ";
+        echo "
+            <script>
+                document.location.href='guest.php';
+            </script>
+          ";
     }
 }
 ?>
@@ -204,8 +205,7 @@ if (isset($_POST['submit'])) {
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-secondary w-100 py-8 fs-4 mb-4 rounded-2"
-                                    name=" submit">Submit</button>
+                                <button type="submit" class="btn btn-secondary w-100 py-8 fs-4 mb-4 rounded-2" name="submit">Submit</button>
                         </form>
                         <!-- Daftar Pertanyaan Selesai-->
 
