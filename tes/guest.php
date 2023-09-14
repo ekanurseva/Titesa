@@ -140,7 +140,7 @@ if (isset($_POST['submit'])) {
                             <div class="row pt-lg-5">
                                 <div class="col-lg-6 col-md-8 mx-auto">
                                     <a href="" class="text-nowrap logo-img text-center d-block py-2 w-100">
-                                        <img src="assets/images/logos/Logo4.png" width="50" alt="" />
+                                        <img src="../assets/images/logos/Logo4.png" width="50" alt="" />
                                     </a>
                                     <h3 class="fw-bold">Tes Tingkat Tekanan Stres Akademik</h3>
                                     <p class="lead">Jawablah pertanyaan dibawah ini !</p>

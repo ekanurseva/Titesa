@@ -1,17 +1,17 @@
 <?php
-require_once "../controller/tesController.php";
+    require_once "../controller/tesController.php";
 
-// $nama_kategori = $_COOKIE['kategori_terpilih'];
+    // $nama_kategori = $_COOKIE['kategori_terpilih'];
 
-$data_hasil = query("SELECT * FROM temporary ORDER BY id DESC LIMIT 1")[0];
+    $data_hasil = query("SELECT * FROM temporary ORDER BY id DESC LIMIT 1")[0];
 
-$nama_kategori = $data_hasil['hsl_tekanan'];
-$kategori = query("SELECT * FROM tingkattekanan_stres WHERE tekanan = '$nama_kategori'")[0];
+    $nama_kategori = $data_hasil['hsl_tekanan'];
+    $kategori = query("SELECT * FROM tingkattekanan_stres WHERE tekanan = '$nama_kategori'")[0];
 
-$idkategori = $kategori['idtekanan'];
-$solusi = query("SELECT * FROM solusi WHERE idtekanan = $idkategori");
+    $idkategori = $kategori['idtekanan'];
+    $solusi = query("SELECT * FROM solusi WHERE idtekanan = $idkategori");
 
-$cf_besar = $data_hasil['bobot'];
+    $cf_besar = $data_hasil['bobot'];
 ?>
 
 <!DOCTYPE html>
@@ -138,7 +138,7 @@ $cf_besar = $data_hasil['bobot'];
                     </div>
 
                     <div class="text-center mt-5">
-                        <a class="btn btn-primary btn-lg" href="../print.php?idhasil=" target="_blank">Cetak</a>
+                        <a class="btn btn-primary btn-lg" href="../print.php?idhasil=<?= enkripsi($data_hasil['id']); ?>" target="_blank">Cetak</a>
                     </div>
                 </div>
             </div>

@@ -107,7 +107,7 @@ $solusi = query("SELECT * FROM solusi WHERE idtekanan = $idkategori");
           </div>
 
           <div class="text-center mt-5">
-            <a class="btn btn-primary btn-lg" href="../print.php?idhasil=<?= $data_hasil['idhasil']; ?>"
+            <a class="btn btn-primary btn-lg" href="../print.php?idhasil=<?= enkripsi($data_hasil['idhasil']); ?>"
               target="_blank">Cetak</a>
           </div>
         </div>

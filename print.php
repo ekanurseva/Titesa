@@ -2,31 +2,20 @@
 require_once 'vendor/autoload.php'; // Lokasi file autoload composer
 require_once 'controller/tesController.php';
 
-if (!isset($_COOKIE['mGpTw'])) {
-    echo "<script>
-                document.location.href='logout.php';
-              </script>";
-    exit;
+$idhasil = dekripsi($_GET['idhasil']);
+
+if (isset($_COOKIE['mGpTw'])) {
+    $data_hasil = query("SELECT * FROM hasil WHERE idhasil = $idhasil")[0];
+    $iduser = $data_hasil['iduser'];
+    $data_user = query("SELECT * FROM user WHERE iduser = $iduser")[0];
+    
 } else {
-    $id = dekripsi($_COOKIE['mGpTw']);
-
-    $result = mysqli_query($conn, "SELECT * FROM user WHERE iduser = '$id'");
-
-    if (mysqli_num_rows($result) !== 1) {
-        echo "<script>
-                    document.location.href='logout.php';
-                  </script>";
-        exit;
-    }
+    $data_hasil = query("SELECT * FROM temporary WHERE id = $idhasil")[0];
 }
 
-$idhasil = $_GET['idhasil'];
-$data_hasil = query("SELECT * FROM hasil WHERE idhasil = $idhasil")[0];
 
 $waktu_tes = strftime('%H:%M:%S | %d %B %Y', strtotime($data_hasil['tgl']));
 
-$iduser = $data_hasil['iduser'];
-$data_user = query("SELECT * FROM user WHERE iduser = $iduser")[0];
 
 $nama_kategori = $data_hasil['hsl_tekanan'];
 $kategori = query("SELECT * FROM tingkattekanan_stres WHERE tekanan = '$nama_kategori'")[0];
@@ -80,9 +69,11 @@ $html = '<!DOCTYPE html>
                 <h1 style="text-align: center;">TINGKAT TEKANAN STRES AKADEMIK</h1><br>
 
                 <h4>Rincian Hasil CF : ';
-$html .= $data_user['nama'] . '</h4>
+                if (isset($_COOKIE['mGpTw'])) {
+                    $html .= $data_user['nama'] . '</h4>';
+                }
 
-                <table>
+                $html .= '<table>
                     <tr>
                         <th>Bobot</th>
                         <th>Tingkat Tekanan Stres</th>
